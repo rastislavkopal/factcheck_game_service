@@ -20,6 +20,7 @@ import { MailConfigService } from './mail/mail-config.service';
 import { MailModule } from './mail/mail.module';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { AllConfigType } from './config/config.type';
+import { AssociationsModule } from './associations/associations.module';
 
 @Module({
   imports: [
@@ -69,6 +70,7 @@ import { AllConfigType } from './config/config.type';
     AuthFacebookModule,
     AuthGoogleModule,
     MailModule,
+    AssociationsModule,
   ],
 })
 export class AppModule {}

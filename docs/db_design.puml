@@ -21,7 +21,44 @@ entity "User" as user {
   *deletedAt: timestamp
   *roleId: int <<FK>>
   *statusId: int <<FK>>
-  <<FK>>
+  --
+  level:int
+  exp: int
+}
+
+entity "LoginHistory" as loginHistory {
+  *id: int <<generated>> PK
+  --
+  *userId: int <<FK>>
+  *createdAt: timestamp
+  *ipAddress: timestamp
+}
+
+entity "UserProfile" as userProfile {
+  *id: int <<generated>> PK
+  --
+  *field: text
+  *isFilled: boolean
+  *userId: int <<FK>>
+}
+
+entity "Association" as association {
+  *id: int <<generated>> PK
+  --
+  *shortTitle: text
+  *title: text
+  *createdBy: int <<FK>> user.id
+  *createdAt: timestamp
+  *deletedAt: timestamp
+} 
+
+entity "Membership" as membership {
+  *id: int <<generated>> PK
+  --
+  *userId: int <<FK>> user.id
+  *associationId: int <<FK>> association.id
+  *startedAt: timestamp
+  *leftAt: timestamp
 }
 
 entity "Roles" as roles {
@@ -38,5 +75,6 @@ entity "Statuses" as statuses {
 
 user }o..|| roles
 user }o..|| statuses
+user ||..o| association
 
 @enduml
