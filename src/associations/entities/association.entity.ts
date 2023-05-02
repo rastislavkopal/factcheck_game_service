@@ -4,11 +4,12 @@ import {
   DeleteDateColumn,
   Entity,
   Index,
-  OneToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
+import { JoinRequest } from 'src/join-request/entities/join-request.entity';
 import { EntityHelper } from 'src/utils/entity-helper';
 
 @Entity()
@@ -27,10 +28,13 @@ export class Association extends EntityHelper {
   @Column({ type: String, nullable: true })
   description: string | null;
 
-  @OneToOne(() => User, {
+  @OneToMany(() => User, (user) => user.association)
+  users?: User;
+
+  @OneToMany(() => JoinRequest, (joinReq) => joinReq.user, {
     eager: false,
   })
-  user?: User;
+  joinRequests?: JoinRequest | null;
 
   @CreateDateColumn()
   createdAt: Date;

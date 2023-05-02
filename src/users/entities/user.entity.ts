@@ -10,9 +10,12 @@ import {
   UpdateDateColumn,
   BeforeInsert,
   BeforeUpdate,
+  OneToMany,
 } from 'typeorm';
 import { Role } from '../../roles/entities/role.entity';
 import { Status } from '../../statuses/entities/status.entity';
+import { JoinRequest } from 'src/join-request/entities/join-request.entity';
+import { Association } from 'src/associations/entities/association.entity';
 import * as bcrypt from 'bcryptjs';
 import { EntityHelper } from 'src/utils/entity-helper';
 import { AuthProvidersEnum } from 'src/auth/auth-providers.enum';
@@ -66,6 +69,16 @@ export class User extends EntityHelper {
   @Index()
   @Column({ type: String, nullable: true })
   lastName: string | null;
+
+  @ManyToOne(() => Association, (assoc) => assoc.users, {
+    eager: true,
+  })
+  association?: Association | null;
+
+  @OneToMany(() => JoinRequest, (joinReq) => joinReq.user, {
+    eager: false,
+  })
+  joinRequests?: JoinRequest | null;
 
   @ManyToOne(() => Role, {
     eager: true,

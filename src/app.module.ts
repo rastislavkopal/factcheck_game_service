@@ -21,6 +21,7 @@ import { MailModule } from './mail/mail.module';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { AllConfigType } from './config/config.type';
 import { AssociationsModule } from './associations/associations.module';
+import { JoinRequestModule } from './join-request/join-request.module';
 
 @Module({
   imports: [
@@ -71,6 +72,7 @@ import { AssociationsModule } from './associations/associations.module';
     AuthGoogleModule,
     MailModule,
     AssociationsModule,
+    JoinRequestModule,
   ],
 })
 export class AppModule {}

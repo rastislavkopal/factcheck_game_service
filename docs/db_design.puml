@@ -47,7 +47,7 @@ entity "Association" as association {
   --
   *shortTitle: text
   *title: text
-  *createdBy: int <<FK>> user.id
+  *createdBy: int <<FK>> user
   *createdAt: timestamp
   *deletedAt: timestamp
 } 
@@ -55,8 +55,8 @@ entity "Association" as association {
 entity "Membership" as membership {
   *id: int <<generated>> PK
   --
-  *userId: int <<FK>> user.id
-  *associationId: int <<FK>> association.id
+  *userId: int <<FK>> user
+  *associationId: int <<FK>> association
   *startedAt: timestamp
   *leftAt: timestamp
 }
@@ -73,8 +73,19 @@ entity "Statuses" as statuses {
   *name : char
 }
 
+entity "JoinRequest" as joinReq {
+  *id: int <<generated>> PK
+  --
+  *userId: int <<FK>> user
+  *associationId: int <<FK>> association
+  *description: text
+  *createdAt: timestamp
+}
+
 user }o..|| roles
 user }o..|| statuses
 user ||..o| association
+user ||..o{ joinReq
+joinReq }o..|| association 
 
 @enduml
